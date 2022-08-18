@@ -151,7 +151,9 @@ func (column *Column)ReflashRows(strs ...string) *Column {
 }
 
 func (column *Column)ResetSync(wg *sync.WaitGroup) *Column {
-  defer wg.Done()
+  defer func (wg *sync.WaitGroup) {
+    if wg != nil { wg.Done() }
+  }(wg)
 
   if column == nil {
     return column
@@ -164,7 +166,9 @@ func (column *Column)ResetSync(wg *sync.WaitGroup) *Column {
   return column
 }
 func (column *Column)SetSync(wg *sync.WaitGroup, str string) *Column {
-  defer wg.Done()
+  defer func (wg *sync.WaitGroup) {
+    if wg != nil { wg.Done() }
+  }(wg)
   
   if column == nil {
     return column
@@ -173,7 +177,9 @@ func (column *Column)SetSync(wg *sync.WaitGroup, str string) *Column {
   return column
 }
 func (column *Column)ReflashSync(wg *sync.WaitGroup, strs ...string) *Column {
-  defer wg.Done()
+  defer func (wg *sync.WaitGroup) {
+    if wg != nil { wg.Done() }
+  }(wg)
   
   if column == nil {
     return column
