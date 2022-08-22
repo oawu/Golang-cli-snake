@@ -8,40 +8,40 @@
 package gameover
 
 import (
-  "fmt"
-  "os"
-  "math"
-  "snake/lib"
-  "snake/lib/window"
+	"fmt"
+	"math"
+	"os"
+	"snake/lib"
+	"snake/lib/window"
 )
 
 func repeat(str string, c int) string {
-  tmp := ""
-  for i := 0; i < c; i++ {
-    tmp = tmp + str
-  }
-  return tmp
+	tmp := ""
+	for i := 0; i < c; i++ {
+		tmp = tmp + str
+	}
+	return tmp
 }
 func Show(strs ...string) {
-  str := "Game Over"
-  if len(strs) > 0 && len(strs[0]) > 0 {
-    str = strs[0]
-  }
-  padding := 4
-  w := lib.StrWidth(str) + padding * 2
+	str := "Game Over"
+	if len(strs) > 0 && len(strs[0]) > 0 {
+		str = strs[0]
+	}
+	padding := 4
+	w := lib.StrWidth(str) + padding*2
 
-  y := uint16(math.Floor(float64(float64(window.Shared.H)) / 2 - 1) - 1)
-  x := uint16(math.Floor((float64(float64(window.Shared.W)) - 16) / 2 - 1))
+	y := uint16(math.Floor(float64(float64(window.Shared.H))/2-1) - 1)
+	x := uint16(math.Floor((float64(float64(window.Shared.W))-16)/2 - 1))
 
-  strs = []string{
-    repeat(" ", w),
-    fmt.Sprintf("%s%s%s", repeat(" ", padding), str, repeat(" ", padding)),
-    repeat(" ", w),
-  }
-  
-  for i, str := range strs {
-    window.Shared.GetRowColumn(y + uint16(i), x).Set(fmt.Sprintf("\x1b[48;5;1m%s\x1b[0m", str)).Reflash()
-  }
-  fmt.Print("\x1b[?25h")
-  os.Exit(0)
+	strs = []string{
+		repeat(" ", w),
+		fmt.Sprintf("%s%s%s", repeat(" ", padding), str, repeat(" ", padding)),
+		repeat(" ", w),
+	}
+
+	for i, str := range strs {
+		window.Shared.GetRowColumn(y+uint16(i), x).Set(fmt.Sprintf("\x1b[48;5;1m%s\x1b[0m", str)).Reflash()
+	}
+	fmt.Print("\x1b[?25h")
+	os.Exit(0)
 }

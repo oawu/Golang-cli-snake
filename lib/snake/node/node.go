@@ -8,11 +8,11 @@
 package node
 
 import (
-  "snake/lib/window/row/column"
+	"snake/lib/window/row/column"
 )
 
 type Node struct {
-	Column *column.Column
+	Column   *column.Column
 	PrevList *Node
 	NextList *Node
 }

@@ -8,75 +8,75 @@
 package food
 
 import (
-  "time"
-  "math/rand"
-  "snake/lib/window"
-  "snake/lib/window/row/column"
+	"math/rand"
+	"snake/lib/window"
+	"snake/lib/window/row/column"
+	"time"
 )
 
 type Food struct {
-  Column *column.Column
+	Column *column.Column
 }
 
 var Shared *Food
 
 func init() {
-  Shared = &Food{}
+	Shared = &Food{}
 }
 
 func include(excludes []*column.Column, c *column.Column) bool {
-  for _, exclude := range excludes {
-    if exclude == c {
-      return true
-    }
-  }
-  return false
+	for _, exclude := range excludes {
+		if exclude == c {
+			return true
+		}
+	}
+	return false
 }
 
-func (food *Food)RowColumn(c *column.Column) *Food {
-  if food == nil {
-    return food
-  }
+func (food *Food) RowColumn(c *column.Column) *Food {
+	if food == nil {
+		return food
+	}
 
-  food.Column = c
-  return food.Reflash()
+	food.Column = c
+	return food.Reflash()
 }
-func (food *Food)Random(excludess ...[]*column.Column) *Food {
-  if food == nil {
-    return food
-  }
+func (food *Food) Random(excludess ...[]*column.Column) *Food {
+	if food == nil {
+		return food
+	}
 
-  excludes := []*column.Column{}
-  if len(excludess) > 0 {
-    excludes = excludess[0]
-  }
+	excludes := []*column.Column{}
+	if len(excludess) > 0 {
+		excludes = excludess[0]
+	}
 
-  boxs := []*column.Column{}
+	boxs := []*column.Column{}
 
-  for r := window.Shared.RowList; r != nil; r = r.NextRowList {
-    for c := r.ColumnList; c != nil; c = c.RightList {
-      if !include(excludes, c) && c.Border == column.BORDER_TBLR {
-        boxs = append(boxs, c)
-      }
-    }
-  }
+	for r := window.Shared.RowList; r != nil; r = r.NextRowList {
+		for c := r.ColumnList; c != nil; c = c.RightList {
+			if !include(excludes, c) && c.Border == column.BORDER_TBLR {
+				boxs = append(boxs, c)
+			}
+		}
+	}
 
-  if len(boxs) <= 0 {
-    return food
-  }
+	if len(boxs) <= 0 {
+		return food
+	}
 
-  rand.Seed(time.Now().UnixNano())
-  rand.Shuffle(len(boxs), func(i, j int) { boxs[i], boxs[j] = boxs[j], boxs[i] })
-  food.Column = boxs[0]
+	rand.Seed(time.Now().UnixNano())
+	rand.Shuffle(len(boxs), func(i, j int) { boxs[i], boxs[j] = boxs[j], boxs[i] })
+	food.Column = boxs[0]
 
-  return food.Reflash()
+	return food.Reflash()
 }
-func (food *Food)Reflash() *Food {
-  if food == nil {
-    return food
-  }
+func (food *Food) Reflash() *Food {
+	if food == nil {
+		return food
+	}
 
-  food.Column.Set("\x1b[38;5;3m※\x1b[0m").Reflash()
+	food.Column.Set("\x1b[38;5;3m※\x1b[0m").Reflash()
 
-  return food
+	return food
 }
