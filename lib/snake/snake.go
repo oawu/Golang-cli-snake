@@ -8,6 +8,7 @@
 package snake
 
 import (
+	xterm "github.com/oawu/Golang-cli-xterm"
 	"snake/lib/food"
 	"snake/lib/gameover"
 	"snake/lib/info"
@@ -186,9 +187,9 @@ func (snake *Snake) Reflash() *Snake {
 			continue
 		}
 		if n == snake.NodeList {
-			n.Column.Reflash("\x1b[38;5;6m█\x1b[0m")
+			n.Column.Reflash(xterm.Cyan("█").String())
 		} else {
-			n.Column.Reflash("\x1b[2m\x1b[38;5;6m▓\x1b[0m\x1b[0m")
+			n.Column.Reflash(xterm.Cyan("▓").String())
 		}
 	}
 

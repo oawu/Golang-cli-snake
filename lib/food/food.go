@@ -8,6 +8,7 @@
 package food
 
 import (
+	xterm "github.com/oawu/Golang-cli-xterm"
 	"math/rand"
 	"snake/lib/window"
 	"snake/lib/window/row/column"
@@ -76,7 +77,7 @@ func (food *Food) Reflash() *Food {
 		return food
 	}
 
-	food.Column.Set("\x1b[38;5;3m※\x1b[0m").Reflash()
+	food.Column.Set(xterm.Yellow("※").String()).Reflash()
 
 	return food
 }
